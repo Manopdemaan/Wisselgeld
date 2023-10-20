@@ -5,6 +5,7 @@ if (count($argv) != 2) {
     exit(1);
 }
 
+
 $bedrag = intval($argv[1]);
 
 if ($bedrag < 0) {
@@ -12,31 +13,15 @@ if ($bedrag < 0) {
     exit(1);
 }
 
-$biljettenVan10 = floor($bedrag / 10);
-$bedrag = $bedrag - ($biljettenVan10 * 10);
+define('MONEY_UNITS', [50, 20, 10, 5, 2, 1]);
 
-$biljettenVan5 = floor($bedrag / 5);
-$bedrag = $bedrag - ($biljettenVan5 * 5);
+$restbedrag = $bedrag;
 
-$biljettenVan2 = floor($bedrag / 2);
-$bedrag = $bedrag - ($biljettenVan2 * 2);
-
-$muntenVan1 = $bedrag;
-
-if ($biljettenVan10 > 0) {
-    echo "$biljettenVan10 x 10 euro" . PHP_EOL;
+foreach (MONEY_UNITS as $geldeenheid) {
+    if ($restbedrag >= $geldeenheid) {
+        $aantalKeerGeldEenheidInRestBedrag = floor($restbedrag / $geldeenheid);
+        $restbedrag = $restbedrag % $geldeenheid;
+        echo "$aantalKeerGeldEenheidInRestBedrag x $geldeenheid euro" . PHP_EOL;
+    }
 }
-
-if ($biljettenVan5 > 0) {
-    echo "$biljettenVan5 x 5 euro" . PHP_EOL;
-}
-
-if ($biljettenVan2 > 0) {
-    echo "$biljettenVan2 x 2 euro" . PHP_EOL;
-}
-
-if ($muntenVan1 > 0) {
-    echo "$muntenVan1 x 1 euro" . PHP_EOL;
-}
-
 ?>
