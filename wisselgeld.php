@@ -1,23 +1,35 @@
 <?php
 
 if (count($argv) != 2) {
-    echo "geen wisselgeld" . PHP_EOL;
+    echo "geen wissegeld" . PHP_EOL;
     exit(1);
 }
 
 $bedrag = intval($argv[1]);
 
 if ($bedrag < 0) {
-    echo "Ongeldig bedrag." . PHP_EOL;
+    echo "Ongeldig bedrag bro." . PHP_EOL;
     exit(1);
 }
 
-$wisselgeld = $bedrag;
+$muntenVan5 = floor($bedrag / 5);
+$bedrag = $bedrag - ($muntenVan5 * 5);
 
-if ($wisselgeld == 0) {
-    echo "geen wisselgeld" . PHP_EOL;
-} else {
-    echo "$wisselgeld x 1 euro" . PHP_EOL;
+$muntenVan2 = floor($bedrag / 2);
+$bedrag = $bedrag - ($muntenVan2 * 2);
+
+$muntenVan1 = $bedrag;
+
+if ($muntenVan5 > 0) {
+    echo "$muntenVan5 x 5 euro" . PHP_EOL;
+}
+
+if ($muntenVan2 > 0) {
+    echo "$muntenVan2 x 2 euro" . PHP_EOL;
+}
+
+if ($muntenVan1 > 0) {
+    echo "$muntenVan1 x 1 euro" . PHP_EOL;
 }
 
 ?>
