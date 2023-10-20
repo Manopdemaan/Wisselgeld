@@ -1,7 +1,7 @@
 <?php
 
 if (count($argv) != 2) {
-    echo "Gebruik: php wisselgeld.php <bedrag>" . PHP_EOL;
+    echo "geen wisselgeld" . PHP_EOL;
     exit(1);
 }
 
