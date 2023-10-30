@@ -3,7 +3,6 @@
 class NoAmountException extends Exception {}
 
 class NegativeAmountException extends Exception {}
-
 class InvalidAmountException extends Exception {}
 
 function validateInput($input) {
@@ -18,11 +17,12 @@ function validateInput($input) {
     }
 
     if ($amount == 0) {
-        throw new InvalidAmountException("Ongeldig bedrag meegegeven.");
+        throw new InvalidAmountException("geen wisselgeld");
     }
 
     return $amount;
 }
+
 
 if (count($argv) != 2) {
     echo "Geen wisselgeld" . PHP_EOL;
