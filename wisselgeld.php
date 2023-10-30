@@ -1,8 +1,11 @@
 <?php
 
-class NoAmountException extends Exception {}
-class NegativeAmountException extends Exception {}
-class InvalidAmountException extends Exception {}
+class NoAmountException extends Exception
+{}
+class NegativeAmountException extends Exception
+{}
+class InvalidAmountException extends Exception
+{}
 
 
 
