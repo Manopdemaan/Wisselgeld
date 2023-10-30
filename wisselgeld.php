@@ -1,5 +1,4 @@
 <?php
-
 class NoAmountException extends Exception {}
 class NegativeAmountException extends Exception {}
 class InvalidAmountException extends Exception {}
@@ -39,10 +38,14 @@ try {
     echo $e->getMessage() . PHP_EOL;
 } catch (InvalidAmountException $e) {
     echo $e->getMessage() . PHP_EOL;
-} catch (TypeError $e) { 
-    echo "TypeError: " . $e->getMessage() . PHP_EOL; 
+} catch (Exception $e) {
+    if ($e instanceof TypeError) { 
+        echo "TypeError: " . $e->getMessage() . PHP_EOL; 
+        assertStringContainsStringIgnoringCase('TypeError', strval($e->getMessage())); // Add this line to fix the error
+    } else { 
+        throw new Exception($e->getMessage());
+    }
 }
-
 
 
 ?>
