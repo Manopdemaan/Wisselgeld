@@ -12,9 +12,11 @@ if ($bedrag < 0) {
     exit(1);
 }
 
+$roundedBedrag = round($bedrag * 20) / 20;
+
 define('MONEY_UNITS', [50.0, 20.0, 10.0, 5.0, 2.0, 1.0, 0.5, 0.2, 0.1, 0.05]);
 
-$restbedrag = $bedrag;
+$restbedrag = $roundedBedrag;
 
 foreach (MONEY_UNITS as $geldeenheid) {
     if ($restbedrag >= $geldeenheid) {
@@ -27,8 +29,12 @@ foreach (MONEY_UNITS as $geldeenheid) {
                     echo "$aantalKeerGeldEenheidInRestBedrag x " . intval($geldeenheid) . " euro" . PHP_EOL;
                 }
             } else {
-                if ($geldeenheid < 1 && $geldeenheid >= 0.01) {
-                    echo "$aantalKeerGeldEenheidInRestBedrag x " . intval($geldeenheid * 100) . " cent" . PHP_EOL;
+                if ($geldeenheid >= 0.01) {
+                    if ($geldeenheid == 0.05) {
+                        echo "$aantalKeerGeldEenheidInRestBedrag x 5 cent" . PHP_EOL;
+                    } else {
+                        echo "$aantalKeerGeldEenheidInRestBedrag x " . intval($geldeenheid * 100) . " cent" . PHP_EOL;
+                    }
                 }
             }
             $restbedrag = round(fmod($restbedrag, $geldeenheid), 2);
