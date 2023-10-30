@@ -1,13 +1,16 @@
 <?php
 
 class NoAmountException extends Exception {}
-
 class NegativeAmountException extends Exception {}
 class InvalidAmountException extends Exception {}
 
 function validateInput($input) {
     if (empty($input)) {
         throw new NoAmountException("Geen bedrag meegegeven.");
+    }
+
+    if (!is_numeric($input)) {
+        throw new InvalidAmountException("Input moet een valide getal zijn.");
     }
 
     $amount = floatval(str_replace(',', '.', $input));
@@ -17,12 +20,11 @@ function validateInput($input) {
     }
 
     if ($amount == 0) {
-        throw new InvalidAmountException("geen wisselgeld");
+        throw new InvalidAmountException("Ongeldig bedrag meegegeven.");
     }
 
     return $amount;
 }
-
 
 if (count($argv) != 2) {
     echo "Geen wisselgeld" . PHP_EOL;
@@ -31,7 +33,6 @@ if (count($argv) != 2) {
 
 try {
     $inputAmount = validateInput($argv[1]);
-
 } catch (NoAmountException $e) {
     echo $e->getMessage() . PHP_EOL;
 } catch (NegativeAmountException $e) {
@@ -39,5 +40,6 @@ try {
 } catch (InvalidAmountException $e) {
     echo $e->getMessage() . PHP_EOL;
 }
+
 
 ?>
