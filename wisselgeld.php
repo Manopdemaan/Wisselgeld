@@ -1,14 +1,17 @@
 <?php
 
-function validateInput($input) {
+function validateInput($input)
+{
     return floatval(str_replace(',', '.', $input));
 }
 
-function roundToNearestFiveCents($amount) {
+function roundToNearestFiveCents($amount)
+{
     return round($amount * 20) / 20;
 }
 
-function calculateChange($amount) {
+function calculateChange($amount)
+{
     $change = [];
     define('MONEY_UNITS', [50.0, 20.0, 10.0, 5.0, 2.0, 1.0, 0.5, 0.2, 0.1, 0.05]);
 
