@@ -1,43 +1,27 @@
 <?php
 
-function validateInput($input)
-{
-    return floatval(str_replace(',', '.', $input));
-}
+class NoAmountException extends Exception {}
 
-function roundToNearestFiveCents($amount)
-{
-    return round($amount * 20) / 20;
-}
+class NegativeAmountException extends Exception {}
 
-function calculateChange($amount)
-{
-    $change = [];
-    define('MONEY_UNITS', [50.0, 20.0, 10.0, 5.0, 2.0, 1.0, 0.5, 0.2, 0.1, 0.05]);
+class InvalidAmountException extends Exception {}
 
-    foreach (MONEY_UNITS as $unit) {
-        $numberOfUnits = floor($amount / $unit);
-        if ($numberOfUnits > 0) {
-            if ($unit >= 1) {
-                if ($unit == 1.0) {
-                    $change[] = "1 x 1 euro";
-                } else {
-                    $change[] = "$numberOfUnits x " . intval($unit) . " euro";
-                }
-            } else {
-                if ($unit >= 0.01) {
-                    if ($unit == 0.05) {
-                        $change[] = "$numberOfUnits x 5 cent";
-                    } else {
-                        $change[] = "$numberOfUnits x " . intval($unit * 100) . " cent";
-                    }
-                }
-            }
-            $amount = round(fmod($amount, $unit), 2);
-        }
+function validateInput($input) {
+    if (empty($input)) {
+        throw new NoAmountException("Geen bedrag meegegeven.");
     }
 
-    return $change;
+    $amount = floatval(str_replace(',', '.', $input));
+
+    if ($amount < 0) {
+        throw new NegativeAmountException("Negatief bedrag meegegeven.");
+    }
+
+    if ($amount == 0) {
+        throw new InvalidAmountException("Ongeldig bedrag meegegeven.");
+    }
+
+    return $amount;
 }
 
 if (count($argv) != 2) {
@@ -45,17 +29,15 @@ if (count($argv) != 2) {
     exit(1);
 }
 
-$inputAmount = validateInput($argv[1]);
-if ($inputAmount < 0) {
-    echo "Ongeldig bedrag bro." . PHP_EOL;
-    exit(1);
-}
+try {
+    $inputAmount = validateInput($argv[1]);
 
-$roundedAmount = roundToNearestFiveCents($inputAmount);
-$change = calculateChange($roundedAmount);
-
-foreach ($change as $changeItem) {
-    echo $changeItem . PHP_EOL;
+} catch (NoAmountException $e) {
+    echo $e->getMessage() . PHP_EOL;
+} catch (NegativeAmountException $e) {
+    echo $e->getMessage() . PHP_EOL;
+} catch (InvalidAmountException $e) {
+    echo $e->getMessage() . PHP_EOL;
 }
 
 ?>
