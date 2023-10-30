@@ -40,7 +40,11 @@ try {
 } catch (InvalidAmountException $e) {
     echo $e->getMessage() . PHP_EOL;
 } catch (Exception $e) {
-    echo $e->getMessage() . PHP_EOL;
+    if ($e instanceof TypeError) { 
+        echo "TypeError: " . $e->getMessage() . PHP_EOL; 
+    } else { 
+        throw new Exception($e->getMessage());
+    }
 }
 
 
