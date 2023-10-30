@@ -41,7 +41,6 @@ try {
 } catch (Exception $e) {
     if ($e instanceof TypeError) { 
         echo "TypeError: " . $e->getMessage() . PHP_EOL; 
-        assertStringContainsStringIgnoringCase('TypeError', strval($e->getMessage())); // Add this line to fix the error
     } else { 
         throw new Exception($e->getMessage());
     }
