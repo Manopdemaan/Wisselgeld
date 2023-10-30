@@ -1,13 +1,8 @@
 <?php
 
-class NoAmountException extends Exception
-{}
-class NegativeAmountException extends Exception
-{}
-class InvalidAmountException extends Exception
-{}
-
-
+class NoAmountException extends Exception {}
+class NegativeAmountException extends Exception {}
+class InvalidAmountException extends Exception {}
 
 function validateInput($input) {
     if (empty($input)) {
@@ -31,21 +26,18 @@ function validateInput($input) {
     return $amount;
 }
 
-if (count($argv) != 2) {
+if (isset($argv) && count($argv) > 1) {
+    try {
+        $inputAmount = validateInput($argv[1]);
+    } catch (NoAmountException | NegativeAmountException | InvalidAmountException $e) {
+        echo $e->getMessage() . PHP_EOL;
+    } catch (TypeError $e) {
+        echo "TypeError: " . $e->getMessage() . PHP_EOL;
+    } catch (Exception $e) {
+        echo $e->getMessage() . PHP_EOL;
+    }
+} else {
     echo "Geen wisselgeld" . PHP_EOL;
     exit(1);
 }
-
-try {
-    $inputAmount = validateInput($argv[1]);
-} catch (NoAmountException | NegativeAmountException | InvalidAmountException $e) {
-    echo $e->getMessage() . PHP_EOL;
-} catch (TypeError $e) {
-    echo "TypeError: " . $e->getMessage() . PHP_EOL;
-} catch (Exception $e) {
-    throw new Exception($e->getMessage());
-}
-
-
-
 ?>
