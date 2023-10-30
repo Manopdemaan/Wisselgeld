@@ -39,5 +39,9 @@ try {
     echo $e->getMessage() . PHP_EOL;
 } catch (InvalidAmountException $e) {
     echo $e->getMessage() . PHP_EOL;
+} catch (Exception $e) {
+    echo $e->getMessage() . PHP_EOL;
 }
+
+
 ?>
