@@ -10,7 +10,7 @@ function validateInput($input) {
     }
 
     if (!is_numeric($input)) {
-        throw new InvalidAmountException("Input moet een valide getal zijn.");
+        throw new InvalidAmountException("Geen wisselgeld");
     }
 
     $amount = floatval(str_replace(',', '.', $input));
@@ -40,6 +40,4 @@ try {
 } catch (InvalidAmountException $e) {
     echo $e->getMessage() . PHP_EOL;
 }
-
-
 ?>
