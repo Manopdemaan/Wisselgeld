@@ -3,7 +3,7 @@
 function validateInput($input)
 {
     if (empty($input) || !is_numeric($input)) {
-        throw new Exception("Input moet een valide getal zijn");
+        throw new Exception("geen wisselgeld");
     }
 
     $amount = floatval($input);
@@ -65,7 +65,7 @@ function calculateChange($amount)
 
 try {
     if ($argc < 2) {
-        throw new Exception("geen wisselgeld");
+        throw new Exception("dit is niet hoe je de applicatie aan zet bro");
     }
 
     $amount = validateInput($argv[1]);
