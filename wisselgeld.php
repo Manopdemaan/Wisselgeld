@@ -1,4 +1,5 @@
 <?php
+
 class NoAmountException extends Exception {}
 class NegativeAmountException extends Exception {}
 class InvalidAmountException extends Exception {}
@@ -32,19 +33,14 @@ if (count($argv) != 2) {
 
 try {
     $inputAmount = validateInput($argv[1]);
-} catch (NoAmountException $e) {
+} catch (NoAmountException | NegativeAmountException | InvalidAmountException $e) {
     echo $e->getMessage() . PHP_EOL;
-} catch (NegativeAmountException $e) {
-    echo $e->getMessage() . PHP_EOL;
-} catch (InvalidAmountException $e) {
-    echo $e->getMessage() . PHP_EOL;
+} catch (TypeError $e) {
+    echo "TypeError: " . $e->getMessage() . PHP_EOL;
 } catch (Exception $e) {
-    if ($e instanceof TypeError) { 
-        echo "TypeError: " . $e->getMessage() . PHP_EOL; 
-    } else { 
-        throw new Exception($e->getMessage());
-    }
+    throw new Exception($e->getMessage());
 }
+
 
 
 ?>
