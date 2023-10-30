@@ -12,7 +12,7 @@ if ($bedrag < 0) {
     exit(1);
 }
 
-define('MONEY_UNITS', [100.0, 50.0, 20.0, 10.0, 5.0, 2.0, 1.0, 0.5, 0.2, 0.1, 0.05]);
+define('MONEY_UNITS', [50.0, 20.0, 10.0, 5.0, 2.0, 1.0, 0.5, 0.2, 0.1, 0.05]);
 
 $restbedrag = $bedrag;
 
@@ -21,7 +21,11 @@ foreach (MONEY_UNITS as $geldeenheid) {
         $aantalKeerGeldEenheidInRestBedrag = floor($restbedrag / $geldeenheid);
         if ($aantalKeerGeldEenheidInRestBedrag > 0) {
             if ($geldeenheid >= 1) {
-                echo "$aantalKeerGeldEenheidInRestBedrag x " . intval($geldeenheid) . " euro" . PHP_EOL;
+                if ($geldeenheid == 1.0) {
+                    echo "1 x 1 euro" . PHP_EOL;
+                } else {
+                    echo "$aantalKeerGeldEenheidInRestBedrag x " . intval($geldeenheid) . " euro" . PHP_EOL;
+                }
             } else {
                 if ($geldeenheid < 1 && $geldeenheid >= 0.01) {
                     echo "$aantalKeerGeldEenheidInRestBedrag x " . intval($geldeenheid * 100) . " cent" . PHP_EOL;
